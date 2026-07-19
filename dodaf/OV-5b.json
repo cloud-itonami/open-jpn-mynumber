@@ -1,0 +1,11 @@
+{
+  "view": "OV-5b",
+  "project": "open-jpn-mynumber",
+  "activities": [
+    { "id": "A1", "name": "Verify identity using JPKI", "bpmn": "identity-proofing.bpmn" },
+    { "id": "A2", "name": "Resolve non-resident address number", "bpmn": "nonresident-address.bpmn" },
+    { "id": "A3", "name": "Create API consent session", "bpmn": "myna-api-consent.bpmn" },
+    { "id": "A4", "name": "Broker inter-agency information request", "bpmn": "interagency-information-request.bpmn" },
+    { "id": "A5", "name": "Disclose self-information and provision history", "bpmn": "self-information-disclosure.bpmn" }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "view": "SV-1",
+  "project": "open-jpn-mynumber",
+  "systems": [
+    { "name": "LangServer/BPMN-contract Engine", "role": "BPMN orchestration" },
+    { "name": "open_jpn_mynumber_worker.py", "role": "Python service-task worker" },
+    { "name": "Kysely/RisingWave graph store", "role": "runtime persistence" },
+    { "name": "JPKI Adapter", "role": "certificate verification boundary" },
+    { "name": "Myna Portal Adapter", "role": "consented API boundary" },
+    { "name": "Local Common Function Adapter", "role": "common-function API and file exchange boundary" },
+    { "name": "Information Network Adapter", "role": "inter-agency information request boundary" }
+  ]
+}

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="open-jpn-mynumber-self-information-disclosure" targetNamespace="https://etzhayyim.ai/bpmn/open-jpn-mynumber">
+  <bpmn:process id="open_jpn_mynumber_self_information_disclosure" name="Self-information and Provision History Disclosure" isExecutable="true">
+    <bpmn:startEvent id="Start_Disclosure" name="Citizen disclosure requested" />
+    <bpmn:sequenceFlow id="f_disclosure_01" sourceRef="Start_Disclosure" targetRef="Task_VerifyJpki" />
+    <bpmn:serviceTask id="Task_VerifyJpki" name="Verify user certificate" camunda:topic="com.etzhayyim.apps.openJpnMynumber.verifyJpki"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.verifyJpki" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_disclosure_02" sourceRef="Task_VerifyJpki" targetRef="Task_Disclose" />
+    <bpmn:serviceTask id="Task_Disclose" name="Return visible disclosure history" camunda:topic="com.etzhayyim.apps.openJpnMynumber.discloseSelfInformation"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.discloseSelfInformation" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_disclosure_03" sourceRef="Task_Disclose" targetRef="End_Disclosed" />
+    <bpmn:endEvent id="End_Disclosed" name="History returned" />
+  </bpmn:process>
+</bpmn:definitions>

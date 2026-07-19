@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             id="open-jpn-mynumber-disclosure-risk"
+             name="My Number Disclosure Risk"
+             namespace="https://etzhayyim.ai/dmn/open-jpn-mynumber">
+  <decision id="openJpnMynumber.disclosureRisk" name="Disclosure risk">
+    <decisionTable id="openJpnMynumber.disclosureRisk.table" hitPolicy="FIRST">
+      <input id="inputDataset" label="dataset_code">
+        <inputExpression id="inputDatasetExpr" typeRef="string">
+          <text>dataset_code</text>
+        </inputExpression>
+      </input>
+      <input id="inputConsent" label="requires_consent">
+        <inputExpression id="inputConsentExpr" typeRef="boolean">
+          <text>requires_consent</text>
+        </inputExpression>
+      </input>
+      <output id="outputManualReview" label="manual_review" name="manual_review" typeRef="boolean"/>
+      <output id="outputRisk" label="risk_level" name="risk_level" typeRef="string"/>
+      <rule id="ruleHealth">
+        <inputEntry id="ruleHealthDataset"><text>"medical","tax_income","pension"</text></inputEntry>
+        <inputEntry id="ruleHealthConsent"><text>-</text></inputEntry>
+        <outputEntry id="ruleHealthReview"><text>true</text></outputEntry>
+        <outputEntry id="ruleHealthRisk"><text>"high"</text></outputEntry>
+      </rule>
+      <rule id="ruleConsent">
+        <inputEntry id="ruleConsentDataset"><text>-</text></inputEntry>
+        <inputEntry id="ruleConsentConsent"><text>true</text></inputEntry>
+        <outputEntry id="ruleConsentReview"><text>true</text></outputEntry>
+        <outputEntry id="ruleConsentRisk"><text>"medium"</text></outputEntry>
+      </rule>
+      <rule id="ruleDefault">
+        <inputEntry id="ruleDefaultDataset"><text>-</text></inputEntry>
+        <inputEntry id="ruleDefaultConsent"><text>-</text></inputEntry>
+        <outputEntry id="ruleDefaultReview"><text>false</text></outputEntry>
+        <outputEntry id="ruleDefaultRisk"><text>"low"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

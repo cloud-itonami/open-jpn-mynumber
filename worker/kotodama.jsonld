@@ -1,0 +1,43 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:open-jpn-mynumber.etzhayyim.com",
+  "name": "open-jpn-mynumber",
+  "handle": "open-jpn-mynumber.etzhayyim.com",
+  "performerType": "service",
+  "runtimeType": "k8s-langserver",
+  "project": "open-jpn-mynumber",
+  "convoSystemPrompt": "You are the ETZHAYYIM Open Japan My Number reference architecture agent. You orchestrate privacy-preserving identity proofing, consent, information request brokering, public-source ingest, and citizen disclosure using public specifications only. Never request or store raw Individual Numbers.",
+  "governance": {
+    "raci": "responsible",
+    "classification": "regulated-identity-reference",
+    "complianceFrameworks": [
+      "jp-mynumber-public-spec-reference",
+      "jpki",
+      "oauth2",
+      "privacy-by-design",
+      "etzhayyim-audit-policy"
+    ]
+  },
+  "profile": {
+    "displayName": "ETZHAYYIM Open Japan My Number Reference",
+    "description": "Public-spec BPMN/Python reference architecture for My Number-style identity, consent, and information-linkage workflows.",
+    "category": "government-identity",
+    "isBot": true,
+    "operator": "etzhayyim.co.jp",
+    "agentType": "workflow-orchestrator",
+    "capabilities": [
+      "jpki-verify",
+      "person-enroll",
+      "nonresident-address-lookup",
+      "nonresident-address-assign",
+      "consent-session",
+      "interagency-information-request",
+      "self-information-disclosure",
+      "provision-history-disclosure",
+      "audit-ledger",
+      "public-source-ingest",
+      "pdf-to-webp",
+      "ipfs-pin"
+    ]
+  }
+}

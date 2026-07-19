@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="open-jpn-mynumber-interagency-information-request" targetNamespace="https://etzhayyim.ai/bpmn/open-jpn-mynumber">
+  <bpmn:process id="open_jpn_mynumber_interagency_information_request" name="Inter-agency Information Request" isExecutable="true">
+    <bpmn:startEvent id="Start_Request" name="Information request received" />
+    <bpmn:sequenceFlow id="f_request_01" sourceRef="Start_Request" targetRef="Task_Classify" />
+    <bpmn:businessRuleTask id="Task_Classify" name="Classify disclosure risk" camunda:decisionRef="openJpnMynumber.disclosureRisk"><bpmn:extensionElements><zeebe:calledDecision decisionId="openJpnMynumber.disclosureRisk" resultVariable="disclosureRisk" /></bpmn:extensionElements></bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="f_request_02" sourceRef="Task_Classify" targetRef="Gateway_Review" />
+    <bpmn:exclusiveGateway id="Gateway_Review" name="Manual review needed?" />
+    <bpmn:sequenceFlow id="f_request_03a" sourceRef="Gateway_Review" targetRef="Task_ManualApproval" name="yes">
+      <bpmn:conditionExpression>=manual_review = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_request_03b" sourceRef="Gateway_Review" targetRef="Task_Broker" name="no">
+      <bpmn:conditionExpression>=manual_review = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Task_ManualApproval" name="Approve special personal information release" camunda:formKey="openJpnMynumber.disclosureReview.v1" />
+    <bpmn:sequenceFlow id="f_request_04" sourceRef="Task_ManualApproval" targetRef="Task_Broker" />
+    <bpmn:serviceTask id="Task_Broker" name="Broker information request" camunda:topic="com.etzhayyim.apps.openJpnMynumber.brokerInformationRequest"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.brokerInformationRequest" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_request_05" sourceRef="Task_Broker" targetRef="Gateway_Approved" />
+    <bpmn:exclusiveGateway id="Gateway_Approved" name="Approved?" />
+    <bpmn:sequenceFlow id="f_request_06a" sourceRef="Gateway_Approved" targetRef="End_ResponseRef" name="approved">
+      <bpmn:conditionExpression>=approved = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_request_06b" sourceRef="Gateway_Approved" targetRef="End_Denied" name="denied">
+      <bpmn:conditionExpression>=approved = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="End_ResponseRef" name="Response reference returned" />
+    <bpmn:endEvent id="End_Denied" name="Request denied" />
+  </bpmn:process>
+</bpmn:definitions>

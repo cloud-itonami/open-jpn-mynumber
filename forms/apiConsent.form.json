@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "id": "openJpnMynumber.apiConsent.v1",
+  "title": "API Consent",
+  "fields": [
+    { "name": "person_ref", "type": "string", "required": true },
+    { "name": "requester_agency", "type": "string", "required": true },
+    { "name": "purpose_code", "type": "string", "required": true },
+    { "name": "scope", "type": "array", "required": true },
+    { "name": "approved", "type": "boolean", "required": true }
+  ]
+}

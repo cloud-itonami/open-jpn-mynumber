@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="open-jpn-mynumber-identity-proofing" targetNamespace="https://etzhayyim.ai/bpmn/open-jpn-mynumber">
+  <bpmn:process id="open_jpn_mynumber_identity_proofing" name="Open Japan My Number Identity Proofing" isExecutable="true">
+    <bpmn:startEvent id="Start_IdentityProofing" name="Identity proofing requested" />
+    <bpmn:sequenceFlow id="f_identity_01" sourceRef="Start_IdentityProofing" targetRef="Task_CollectConsent" />
+    <bpmn:userTask id="Task_CollectConsent" name="Collect purpose and consent" camunda:formKey="openJpnMynumber.identityProofing.v1" />
+    <bpmn:sequenceFlow id="f_identity_02" sourceRef="Task_CollectConsent" targetRef="Task_VerifyJpki" />
+    <bpmn:serviceTask id="Task_VerifyJpki" name="Verify JPKI certificate" camunda:topic="com.etzhayyim.apps.openJpnMynumber.verifyJpki"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.verifyJpki" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_identity_03" sourceRef="Task_VerifyJpki" targetRef="Gateway_CertValid" />
+    <bpmn:exclusiveGateway id="Gateway_CertValid" name="Certificate valid?" />
+    <bpmn:sequenceFlow id="f_identity_04a" sourceRef="Gateway_CertValid" targetRef="Task_RegisterPerson" name="valid">
+      <bpmn:conditionExpression>=certificate_status = "valid"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_identity_04b" sourceRef="Gateway_CertValid" targetRef="End_Rejected" name="invalid">
+      <bpmn:conditionExpression>=certificate_status != "valid"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Task_RegisterPerson" name="Register agency subject alias" camunda:topic="com.etzhayyim.apps.openJpnMynumber.registerPerson"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.registerPerson" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_identity_05" sourceRef="Task_RegisterPerson" targetRef="End_Registered" />
+    <bpmn:endEvent id="End_Registered" name="Person reference registered" />
+    <bpmn:endEvent id="End_Rejected" name="Identity proofing rejected" />
+  </bpmn:process>
+</bpmn:definitions>

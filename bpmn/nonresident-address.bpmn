@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="open-jpn-mynumber-nonresident-address" targetNamespace="https://etzhayyim.ai/bpmn/open-jpn-mynumber">
+  <bpmn:process id="open_jpn_mynumber_nonresident_address" name="Non-resident Address Number Resolution" isExecutable="true">
+    <bpmn:startEvent id="Start_Address" name="Address resolution requested" />
+    <bpmn:sequenceFlow id="f_address_01" sourceRef="Start_Address" targetRef="Task_Lookup" />
+    <bpmn:serviceTask id="Task_Lookup" name="Lookup non-resident address" camunda:topic="com.etzhayyim.apps.openJpnMynumber.lookupNonresidentAddress"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.lookupNonresidentAddress" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_address_02" sourceRef="Task_Lookup" targetRef="Gateway_Found" />
+    <bpmn:exclusiveGateway id="Gateway_Found" name="Existing address found?" />
+    <bpmn:sequenceFlow id="f_address_03a" sourceRef="Gateway_Found" targetRef="End_Found" name="found">
+      <bpmn:conditionExpression>=match_found = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_address_03b" sourceRef="Gateway_Found" targetRef="Task_ManualReview" name="not found">
+      <bpmn:conditionExpression>=match_found = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Task_ManualReview" name="Review duplicate risk" camunda:formKey="openJpnMynumber.nonresidentReview.v1" />
+    <bpmn:sequenceFlow id="f_address_04" sourceRef="Task_ManualReview" targetRef="Task_Assign" />
+    <bpmn:serviceTask id="Task_Assign" name="Assign non-resident address" camunda:topic="com.etzhayyim.apps.openJpnMynumber.assignNonresidentAddress"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.assignNonresidentAddress" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_address_05" sourceRef="Task_Assign" targetRef="End_Assigned" />
+    <bpmn:endEvent id="End_Found" name="Address reference returned" />
+    <bpmn:endEvent id="End_Assigned" name="Address reference assigned" />
+  </bpmn:process>
+</bpmn:definitions>

@@ -1,0 +1,40 @@
+;; lg-open-jpn-mynumber — clj/bb port of the Python LangGraph server
+;; (ADR-2606280030, langgraph-python -> langgraph-clj). Scoped to THIS app only;
+;; does NOT touch the repo-root bb.edn.
+;;
+;;   src   — lg-open-jpn-mynumber.* namespaces (port of lg/lg_open_jpn_mynumber/**
+;;           + worker/python/open_jpn_mynumber_worker.py TASKS)
+;;   test  — lg-open-jpn-mynumber.smoke-test (clojure.test ports of lg/tests/**)
+;;
+;; langgraph-clj / langchain-clj are pinned to the SAME shas as the other
+;; wave-1/2 twins (recap, docs) so the actor StateGraph idiom is identical.
+;; cheshire + babashka.http-client + org.httpkit.server are bb built-ins.
+;;
+;; Run the suite:  bb test   (or:  bb run_tests.clj)
+{:paths ["src" "test"]
+ :deps {com-junkawasaki/langgraph-clj
+        {:git/url "https://github.com/com-junkawasaki/langgraph-clj"
+         :git/sha "c7daa07d4e50f55d7e2a02e4b89dbeb2b200961d"}
+        com-junkawasaki/langchain-clj
+        {:git/url "https://github.com/com-junkawasaki/langchain-clj"
+         :git/sha "2b03859c3ee722b64f3eddd0b615a54019b17c81"}}
+ :tasks
+ {test {:doc "Run the clojure.test suite under bb (port parity with lg/tests/**)."
+        :task (load-file "run_tests.clj")}
+  serve {:doc "Start the clj HTTP server with explicit host capabilities."
+         :requires ([org.httpkit.server :as httpkit]
+                    [lg-open-jpn-mynumber.server :as server]
+                    [lg-open-jpn-mynumber.util :as util])
+         :task
+         (let [env (fn [name default] (or (System/getenv name) default))
+               port (util/->int (or (first *command-line-args*)
+                                    (env "PORT" "8080")) 8080)
+               adapter-mode (env "OPEN_JPN_MYNUMBER_ADAPTER_MODE" "mock")
+               handler (fn [request]
+                         (binding [util/*adapter-mode* adapter-mode]
+                           (server/app request)))]
+           (binding [util/*adapter-mode* adapter-mode]
+             (server/start! (fn [_ options]
+                              (httpkit/run-server handler options))
+                            {:port port}))
+           (deref (promise)))}}}

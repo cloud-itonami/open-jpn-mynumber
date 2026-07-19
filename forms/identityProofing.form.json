@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "id": "openJpnMynumber.identityProofing.v1",
+  "title": "Identity Proofing",
+  "fields": [
+    { "name": "person_ref", "type": "string", "required": true },
+    { "name": "agency_code", "type": "string", "required": true },
+    { "name": "subject_token", "type": "string", "required": true },
+    { "name": "purpose_code", "type": "string", "required": true },
+    { "name": "certificate_serial", "type": "string", "required": false }
+  ]
+}

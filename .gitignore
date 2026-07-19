@@ -1,0 +1,13 @@
+data/ingest/blobs/
+data/ingest/tmp/
+data/ingest/manifest.json
+data/ingest/*.jsonl
+data/ingest/*.sqlite3
+data/ingest/corpus-summary.json
+!coverage/
+!coverage/build_coverage.py
+!coverage/topics.json
+coverage/coverage.json
+coverage/coverage.md
+!worker/python/schema.sql
+worker/python/*.sqlite3

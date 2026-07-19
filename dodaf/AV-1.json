@@ -1,0 +1,13 @@
+{
+  "view": "AV-1",
+  "project": "open-jpn-mynumber",
+  "title": "Open Japan My Number Reference Architecture Overview",
+  "version": "0.1.0",
+  "date": "2026-04-26",
+  "scope": "Public-spec BPMN/Python reference system for identity proofing, consent, information linkage, and disclosure history.",
+  "assumptions": [
+    "Only public specifications are used.",
+    "Real Individual Numbers are out of scope.",
+    "Government production connectors are mocked until separately approved."
+  ]
+}

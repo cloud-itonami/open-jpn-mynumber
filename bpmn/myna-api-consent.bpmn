@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="open-jpn-mynumber-myna-api-consent" targetNamespace="https://etzhayyim.ai/bpmn/open-jpn-mynumber">
+  <bpmn:process id="open_jpn_mynumber_myna_api_consent" name="Myna Portal-style API Consent Session" isExecutable="true">
+    <bpmn:startEvent id="Start_Consent" name="API data access requested" />
+    <bpmn:sequenceFlow id="f_consent_01" sourceRef="Start_Consent" targetRef="Task_CreateConsent" />
+    <bpmn:serviceTask id="Task_CreateConsent" name="Create consent session" camunda:topic="com.etzhayyim.apps.openJpnMynumber.createConsentSession"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.createConsentSession" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_consent_02" sourceRef="Task_CreateConsent" targetRef="Task_UserAuth" />
+    <bpmn:userTask id="Task_UserAuth" name="User authenticates and approves scope" camunda:formKey="openJpnMynumber.apiConsent.v1" />
+    <bpmn:sequenceFlow id="f_consent_03" sourceRef="Task_UserAuth" targetRef="Gateway_Approved" />
+    <bpmn:exclusiveGateway id="Gateway_Approved" name="Approved?" />
+    <bpmn:sequenceFlow id="f_consent_04a" sourceRef="Gateway_Approved" targetRef="End_ConsentGranted" name="approved">
+      <bpmn:conditionExpression>=approved = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_consent_04b" sourceRef="Gateway_Approved" targetRef="End_ConsentDenied" name="denied">
+      <bpmn:conditionExpression>=approved = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="End_ConsentGranted" name="Consent receipt available" />
+    <bpmn:endEvent id="End_ConsentDenied" name="Consent denied" />
+  </bpmn:process>
+</bpmn:definitions>

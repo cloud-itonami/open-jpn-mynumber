@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="open-jpn-mynumber-file-exchange" targetNamespace="https://etzhayyim.ai/bpmn/open-jpn-mynumber">
+  <bpmn:process id="open_jpn_mynumber_file_exchange" name="Local-government File Exchange" isExecutable="true">
+    <bpmn:startEvent id="Start_FileExchange" name="File exchange requested" />
+    <bpmn:sequenceFlow id="f_file_01" sourceRef="Start_FileExchange" targetRef="Task_ValidateManifest" />
+    <bpmn:serviceTask id="Task_ValidateManifest" name="Validate transfer file manifest" camunda:topic="com.etzhayyim.apps.openJpnMynumber.validateFileManifest"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.validateFileManifest" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_file_02" sourceRef="Task_ValidateManifest" targetRef="Gateway_ManifestValid" />
+    <bpmn:exclusiveGateway id="Gateway_ManifestValid" name="Manifest valid?" />
+    <bpmn:sequenceFlow id="f_file_03a" sourceRef="Gateway_ManifestValid" targetRef="Task_RegisterTransfer" name="valid">
+      <bpmn:conditionExpression>=valid = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_file_03b" sourceRef="Gateway_ManifestValid" targetRef="End_Rejected" name="invalid">
+      <bpmn:conditionExpression>=valid = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Task_RegisterTransfer" name="Register file transfer" camunda:topic="com.etzhayyim.apps.openJpnMynumber.registerFileTransfer"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.registerFileTransfer" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_file_04" sourceRef="Task_RegisterTransfer" targetRef="Task_PollStatus" />
+    <bpmn:serviceTask id="Task_PollStatus" name="Poll file transfer status" camunda:topic="com.etzhayyim.apps.openJpnMynumber.pollFileTransferStatus"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.pollFileTransferStatus" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_file_05" sourceRef="Task_PollStatus" targetRef="End_Registered" />
+    <bpmn:endEvent id="End_Registered" name="File transfer registered" />
+    <bpmn:endEvent id="End_Rejected" name="File transfer rejected" />
+  </bpmn:process>
+</bpmn:definitions>

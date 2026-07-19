@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0",
+  "id": "openJpnMynumber.disclosureReview.v1",
+  "title": "Disclosure Review",
+  "fields": [
+    { "name": "person_ref", "type": "string", "required": true },
+    { "name": "requester_agency", "type": "string", "required": true },
+    { "name": "holder_agency", "type": "string", "required": true },
+    { "name": "dataset_code", "type": "string", "required": true },
+    { "name": "purpose_code", "type": "string", "required": true },
+    { "name": "approved", "type": "boolean", "required": true }
+  ]
+}

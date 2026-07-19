@@ -1,0 +1,49 @@
+{
+  "project": "open-jpn-mynumber",
+  "fetched_at_policy": "runtime",
+  "seed_pages": [
+    {
+      "id": "digital-agency-common-feature-spec",
+      "url": "https://www.digital.go.jp/policies/local_governments/common-feature-specification",
+      "publisher": "Digital Agency",
+      "license_note": "Public government web page. Preserve source URL and retrieval metadata."
+    },
+    {
+      "id": "digital-agency-mynumber",
+      "url": "https://www.digital.go.jp/policies/mynumber",
+      "publisher": "Digital Agency",
+      "license_note": "Public government web page. Preserve source URL and retrieval metadata."
+    },
+    {
+      "id": "digital-agency-local-auth-platform",
+      "url": "https://www.digital.go.jp/policies/mynumber/local-government/jpki-platform-for-lgwan",
+      "publisher": "Digital Agency",
+      "license_note": "Public government web page. Preserve source URL and retrieval metadata."
+    },
+    {
+      "id": "myna-portal-api-index",
+      "url": "https://myna.go.jp/html/api/index.html",
+      "publisher": "Digital Agency / Myna Portal",
+      "license_note": "Public API specification index. Individual API specs may require application or NDA; only public links are ingested."
+    }
+  ],
+  "include_extensions": [
+    ".html",
+    ".htm",
+    ".pdf",
+    ".xlsx",
+    ".xls",
+    ".docx",
+    ".doc",
+    ".zip",
+    ".json",
+    ".csv"
+  ],
+  "same_hosts": [
+    "www.digital.go.jp",
+    "digital.go.jp",
+    "myna.go.jp",
+    "img.myna.go.jp"
+  ]
+}
+

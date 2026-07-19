@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="open-jpn-mynumber-medical-pmh" targetNamespace="https://etzhayyim.ai/bpmn/open-jpn-mynumber">
+  <bpmn:process id="open_jpn_mynumber_medical_pmh" name="Medical Insurance Exam and PMH Information" isExecutable="true">
+    <bpmn:startEvent id="Start_MedicalPmh" name="Medical or PMH operation requested" />
+    <bpmn:sequenceFlow id="f_med_01" sourceRef="Start_MedicalPmh" targetRef="Gateway_MedicalOperation" />
+    <bpmn:exclusiveGateway id="Gateway_MedicalOperation" name="Operation?" />
+    <bpmn:sequenceFlow id="f_med_request" sourceRef="Gateway_MedicalOperation" targetRef="Task_RequestMedicalInfo" name="request">
+      <bpmn:conditionExpression>=operation = "request"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_med_status" sourceRef="Gateway_MedicalOperation" targetRef="Task_GetMedicalInfoStatus" name="status">
+      <bpmn:conditionExpression>=operation = "status"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Task_RequestMedicalInfo" name="Request medical or PMH information" camunda:topic="com.etzhayyim.apps.openJpnMynumber.requestMedicalInfo"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.requestMedicalInfo" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_med_02" sourceRef="Task_RequestMedicalInfo" targetRef="End_MedicalPmh" />
+    <bpmn:serviceTask id="Task_GetMedicalInfoStatus" name="Get medical or PMH status" camunda:topic="com.etzhayyim.apps.openJpnMynumber.getMedicalInfoStatus"><bpmn:extensionElements><zeebe:taskDefinition type="com.etzhayyim.apps.openJpnMynumber.getMedicalInfoStatus" retries="3" /></bpmn:extensionElements></bpmn:serviceTask>
+    <bpmn:sequenceFlow id="f_med_03" sourceRef="Task_GetMedicalInfoStatus" targetRef="End_MedicalPmh" />
+    <bpmn:endEvent id="End_MedicalPmh" name="Medical or PMH request audited" />
+  </bpmn:process>
+</bpmn:definitions>

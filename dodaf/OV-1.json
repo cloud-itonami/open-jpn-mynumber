@@ -1,0 +1,24 @@
+{
+  "view": "OV-1",
+  "project": "open-jpn-mynumber",
+  "nodes": [
+    "Citizen",
+    "Requester Agency",
+    "Holder Agency",
+    "JPKI",
+    "Myna Portal API",
+    "Local Government Common Functions",
+    "Information Provision Network",
+    "etzhayyim BPMN Orchestrator",
+    "Python Worker",
+    "Audit Ledger"
+  ],
+  "exchanges": [
+    { "from": "Citizen", "to": "etzhayyim BPMN Orchestrator", "name": "consent and authentication" },
+    { "from": "Python Worker", "to": "JPKI", "name": "certificate status check" },
+    { "from": "Python Worker", "to": "Myna Portal API", "name": "consented API session" },
+    { "from": "Python Worker", "to": "Local Government Common Functions", "name": "address and OAuth/file-exchange boundary" },
+    { "from": "Python Worker", "to": "Information Provision Network", "name": "purpose-bound information request" },
+    { "from": "Python Worker", "to": "Audit Ledger", "name": "append-only audit event" }
+  ]
+}
