@@ -1,3 +1,6 @@
+# Local venv for the ingest pipeline (docs/operator-quickstart.md step 4).
+.venv/
+
 data/ingest/blobs/
 data/ingest/tmp/
 data/ingest/manifest.json
