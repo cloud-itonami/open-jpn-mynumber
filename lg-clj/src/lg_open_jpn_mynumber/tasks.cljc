@@ -10,7 +10,7 @@
   `mv_*` materialized-view reads are recomputed here from base rows.
 
   `TASKS` mirrors the Python `TASKS` dict (full NSID -> handler)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [lg-open-jpn-mynumber.audit :refer [audit]]
             [lg-open-jpn-mynumber.store :as store]
             [lg-open-jpn-mynumber.util :as u]
@@ -200,7 +200,7 @@
               (when-not (contains? item f)
                 (throw (ex-info (str "files[" idx "]." (name f) " is required") {}))))
             {:name (str (:name item))
-             :sha256 (str/lower-case (str (:sha256 item)))
+             :sha256 (str/lower (str (:sha256 item)))
              :bytes (u/->int (:bytes item) 0)
              :media_type (str (or (:media_type item) "application/octet-stream"))})
           files))))
