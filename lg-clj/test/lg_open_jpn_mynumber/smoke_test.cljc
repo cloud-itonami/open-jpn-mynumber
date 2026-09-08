@@ -5,7 +5,7 @@
   exercised health + 404s). Here the Store is an in-memory MemStore, so the full
   handler logic + audit ledger verify under bb."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [langgraph.graph :as g]
             [lg-open-jpn-mynumber.graphs :as graphs]
             [lg-open-jpn-mynumber.server :as server]

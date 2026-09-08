@@ -15,7 +15,7 @@
   Handlers persist through an injected Store; `*store*` is the dynamic seam the
   server/tests bind. It defaults to a shared in-memory MemStore so the compiled
   GRAPHS are invocable even unbound (RisingWave is the forbidden substrate)."
-  (:require [langgraph.graph :as g]
+  (:require [kotoba.lang.text] [langgraph.graph :as g]
             [lg-open-jpn-mynumber.store :as store]
             [lg-open-jpn-mynumber.tasks :as tasks]
             [lg-open-jpn-mynumber.util :as u]))
@@ -50,7 +50,7 @@
 (defn- tail
   "NSID tail (assistant_id) — nsid.rsplit('.', 1)[-1]."
   [nsid]
-  (last (clojure.string/split nsid #"\.")))
+  (last (kotoba.lang.text/split nsid #"\.")))
 
 ;; GRAPHS: health + one graph per NSID tail (parity with server.py GRAPHS).
 (def GRAPHS

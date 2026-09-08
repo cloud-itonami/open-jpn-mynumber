@@ -17,7 +17,7 @@
   org.httpkit.server listener (bb built-in). The DEPLOYED runtime remains the
   FastAPI pod (lg/) — this clj server COEXISTS and is the additive, verified twin
   (py_removed=0 by design)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [langgraph.graph :as g]
             [lg-open-jpn-mynumber.graphs :as graphs]
             [lg-open-jpn-mynumber.util :as u]

@@ -10,7 +10,7 @@
 
   All keep the snake_case identifier vocabulary of the Python handlers; XRPC
   callers send camelCase, which `snake-keys` normalizes before unpacking."
-  (:require [clojure.string :as str])
+  (:require [kotoba.lang.text :as str])
   #?(:clj (:import [java.security MessageDigest SecureRandom]
                    [java.time ZonedDateTime ZoneOffset]
                    [java.time.temporal ChronoUnit]
@@ -72,7 +72,7 @@
   (-> (str name)
       (str/replace #"([A-Z]+)([A-Z][a-z])" "$1_$2")
       (str/replace #"([a-z\d])([A-Z])" "$1_$2")
-      str/lower-case))
+      str/lower))
 
 (defn snake-keys
   "Normalize a payload map's keys camelCase/PascalCase → snake_case keyword
@@ -93,7 +93,7 @@
 (defn ensure-mock-mode
   "worker.ensure_mock_mode — real adapter mode is not implemented in this scaffold."
   []
-  (when (not= (-> *adapter-mode* str/trim str/lower-case) "mock")
+  (when (not= (-> *adapter-mode* str/trim str/lower) "mock")
     (throw (ex-info "real adapter mode is not implemented in this scaffold" {}))))
 
 (defn clip [s n]

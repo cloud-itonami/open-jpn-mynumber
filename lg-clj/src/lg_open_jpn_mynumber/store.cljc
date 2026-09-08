@@ -22,7 +22,7 @@
   The Python `mv_*` materialized-view reads (oauth/file-transfer/application/
   medical status) are computed in the HANDLERS from the base-table rows here, so
   the data semantics are preserved without a SQL view engine."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defprotocol Store
   (put! [this table id row]
