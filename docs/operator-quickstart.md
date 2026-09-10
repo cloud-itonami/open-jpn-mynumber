@@ -220,8 +220,8 @@ currently be regenerated.
 - `docs/architecture.md` — components, data model, security controls
 - `docs/spec-basis.md` — which public documents, at which version, and what they
   do *not* license us to build
-- `lg-clj/src/lg_open_jpn_mynumber/tasks.cljc` — all 17 handlers; the consent and
+- `lg-clj/src/lg_open_jpn_mynumber/tasks.kotoba` — all 17 handlers; the consent and
   purpose checks are legible in one file
-- `lg-clj/test/lg_open_jpn_mynumber/smoke_test.cljc` — the invariants above,
+- `lg-clj/test/lg_open_jpn_mynumber/smoke_test.kotoba` — the invariants above,
   written as assertions
 - `bpmn/` — the process contracts, viewable in any BPMN 2.0 editor
