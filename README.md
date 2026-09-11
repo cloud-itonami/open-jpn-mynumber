@@ -66,7 +66,7 @@ ledger directly.
 ## Testing
 
 ```bash
-cd lg-clj && bb test
+cd lg-clj && kbb -M:test
 ```
 
 29 tests / 102 assertions, covering graph topology, dispatch, the consent gate,

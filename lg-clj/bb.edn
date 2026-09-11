@@ -10,7 +10,7 @@
 ;; wave-1/2 twins (recap, docs) so the actor StateGraph idiom is identical.
 ;; cheshire + babashka.http-client + org.httpkit.server are bb built-ins.
 ;;
-;; Run the suite:  bb test   (or:  bb run_tests.clj)
+;; Run the suite:  bb test   (or:  kbb run_tests.cljk)
 {:paths ["src" "test"]
  :deps {com-junkawasaki/langgraph-clj
         {:git/url "https://github.com/com-junkawasaki/langgraph-clj"
