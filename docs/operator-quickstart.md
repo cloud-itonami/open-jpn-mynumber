@@ -14,7 +14,7 @@ This is the fastest proof the checkout is intact.
 
 ```bash
 cd lg-clj
-bb test
+kbb -M:test
 ```
 
 ```
@@ -32,7 +32,7 @@ offline and have never resolved them, this step is the one that will fail.
 
 ```bash
 cd lg-clj
-bb serve 18123        # or: PORT=18123 bb serve
+kbb -M:serve 18123        # or: PORT=18123 bb serve
 ```
 
 ```
