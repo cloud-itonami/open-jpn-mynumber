@@ -86,4 +86,4 @@ the fetchable seed set is `ingest/sources.json`.
 No real Individual Number collection or generation. No reverse engineering of
 private interfaces. No bypassing official API onboarding, NDA, GCAS, Digital
 PMO, or agency approval. No claim of legal compliance without separate legal and
-security review. See `CLAUDE.md` for the substrate and residency posture.
+security review. See `AGENTS.md` for the substrate and residency posture.

@@ -12,7 +12,7 @@ that were not previously flagged.
   - 60-apps/etzhayyim-project-open-jpn-mynumber/worker/python/open_jpn_mynumber_worker.py
 ```
 
-## Required remediation (per CLAUDE.md substrate boundary):
+## Required remediation (per AGENTS.md substrate boundary):
 
 - [ ] Replace `@atproto/api` / `viem` / IPFS / Signal direct imports with `@etzhayyim/sdk`.
 - [ ] Strip RisingWave / Postgres / Kysely / Drizzle / Prisma → AT MST + IPFS + Base L2.
@@ -23,6 +23,6 @@ that were not previously flagged.
 ## Reference
 
 - ADR-2605192100 / 2605192115 / 2605192200
-- `/CLAUDE.md` § Substrate boundary
+- `/AGENTS.md` § Substrate boundary
 - This file added by Coverage Gap Patch task #15.
 
