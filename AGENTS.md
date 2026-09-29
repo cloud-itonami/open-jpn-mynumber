@@ -8,7 +8,7 @@ This is not a government production system and does not contain private J-LIS, D
 
 | Artifact | Vendor (`etzhayyim/etzhayyim-root`) | etzhayyim (this repo) |
 |---|---|---|
-| Spec (`CLAUDE.md`, project dir) | absent | **present** (this dir) |
+| Spec (`AGENTS.md`, project dir) | absent | **present** (this dir) |
 | Worker / BPMN / DMN / forms / lg / ingest pipeline | absent | **present** (`bpmn/`, `dmn/`, `forms/`, `lg/`, `worker/`, `ingest/`) |
 | Lexicons (`openJpnMynumber/health.json`) | present (1 file) → mirrored | **present** (`00-contracts/lexicons/com/etzhayyim/apps/openJpnMynumber/`) |
 | Corpus blobs (923 files, ~177 MB on disk; ~280 MB before pruning) | **present** (`data/ingest/`) — kept per Option A | absent (read-fresh from gov sources) |
@@ -18,7 +18,7 @@ This is not a government production system and does not contain private J-LIS, D
 
 ## Substrate-boundary notes
 
-Per `etzhayyim/root/CLAUDE.md` §"Substrate boundary":
+Per `etzhayyim/root/AGENTS.md` §"Substrate boundary":
 - This project is kotoba. No `createKyselyDb` / `env.HYPERDRIVE` in any deploy from this directory.
 - Public-source ingest pulls fresh from `data.go.jp` + 自治体公開 PDF/Excel/HTML on each cycle. Vendor `data/ingest/` is historical-only; not consumed by this repo's worker.
 - No commerce. No PII. No `did:web:openJpnMynumber.etzhayyim.com` payments wiring.

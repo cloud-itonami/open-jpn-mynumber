@@ -3,7 +3,7 @@
 
   Every handler appends one immutable event (and per-subject edges) describing
   the write/disclosure/issue/cert it performed; this IS the data-sovereignty /
-  traceability core of the actor pattern (CLAUDE.md §Actors). The Python writes a
+  traceability core of the actor pattern (AGENTS.md §Actors). The Python writes a
   `vertex_open_jpn_mynumber_audit_event` row + `edge_open_jpn_mynumber_event_subject`
   edges into RisingWave; here we append into the injected `Store` (MemStore by
   default — RisingWave is the forbidden substrate)."

@@ -14,7 +14,7 @@
                      faithful analogue of the worker's `mock` ADAPTER_MODE, which
                      is the only mode the scaffold implements anyway).
   - `->KotobaStore`— production seam targeting the kotoba Datom log (the repo's
-                     canonical state per CLAUDE.md / ADR-2605172000: collection
+                     canonical state per AGENTS.md / ADR-2605172000: collection
                      `com.etzhayyim.apps.openJpnMynumber.*`). Left as a documented
                      pass-through over an injected `:db-api` so a human can wire it
                      at cutover WITHOUT touching the handlers or graph topology.
@@ -56,7 +56,7 @@
 ;; ── kotoba Datom-log seam (production cutover target) ───────────────────────
 ;;
 ;; `db-api` is the langchain.db `{:q :transact! :db :pull :entid}` map described
-;; in CLAUDE.md (in-process `langchain.db/api` OR kotoba-server XRPC
+;; in AGENTS.md (in-process `langchain.db/api` OR kotoba-server XRPC
 ;; `kotoba-db/kotoba-api` — same record either way). A human wires it at cutover;
 ;; until then the deployed runtime is the Python pod and this stays unused.
 
